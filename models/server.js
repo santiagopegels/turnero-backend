@@ -31,7 +31,6 @@ class Server {
         //CORS
         this.app.use(cors())
 
-        this.app.use(express.static('public'))
     }
 
     routes() {
