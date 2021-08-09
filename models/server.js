@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 
+const {dbConnection} = require('../database/config')
 const {socketController} = require('../controllers/socket')
 
 class Server {
@@ -19,7 +20,11 @@ class Server {
         //Routes
         this.routes()
 
+        //Init Sockets
         this.sockets()
+
+        //Init Database
+        dbConnection()
     }
 
     middlewares() {
