@@ -19,7 +19,7 @@ class Server {
         //Routes
         this.routes()
 
-     //   this.sockets()
+        this.sockets()
     }
 
     middlewares() {
@@ -35,8 +35,6 @@ class Server {
 
     sockets() {
         this.io.on('connection', socketController);
-
-
     }
 
     listen() {
