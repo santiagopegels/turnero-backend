@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
+const {generateJWT} = require('../helpers/generateJWT')
 
 const newUser = async (req, res) => {
 
@@ -36,6 +37,46 @@ const newUser = async (req, res) => {
     }
 }
 
+const login = async (req, res) => { 
+
+    const { email, password } = req.body
+
+    try {
+        let user = await User.findOne({ email })
+
+        if (!user) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Compruebe usuario o contraseña'
+            })
+        }
+
+        const validPassword = bcrypt.compareSync(password, user.password)
+
+        if (!validPassword) {
+            return res.status(400).json({
+                msg: 'Correo o password incorrecto'
+            })
+        }
+
+        const token = await generateJWT(user.id, user.name)
+
+        return res.status(200).json({
+            status: true,
+            user,
+            token
+        })
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            ok: false,
+            msg: error
+        })
+    }
+}
+
 module.exports = {
-    newUser
+    newUser,
+    login
 }
