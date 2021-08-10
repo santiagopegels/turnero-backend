@@ -12,7 +12,9 @@ class Server {
         this.server = require('http').createServer(this.app);
         this.io = require('socket.io')(this.server);
 
-        this.paths = {}
+        this.paths = {
+            auth: '/api/auth'
+        }
 
         //Middlewares
         this.middlewares()
@@ -34,7 +36,7 @@ class Server {
     }
 
     routes() {
-        // this.app.use(this.paths.auth, require('../routes/auth'))
+         this.app.use(this.paths.auth, require('../routes/auth'))
     }
 
     sockets() {
