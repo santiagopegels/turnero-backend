@@ -69,14 +69,28 @@ const login = async (req, res) => {
 
     } catch (error) {
         console.log(error)
-        res.status(500).json({
+        return res.status(500).json({
             ok: false,
             msg: error
         })
     }
 }
 
+const tokenRenew = async (req, res) => {
+
+    const {user} = req
+
+    const token = await generateJWT(user.id, user.name)
+
+    return res.json({
+        status: true,
+        token,
+        user
+    })
+}
+
 module.exports = {
     newUser,
-    login
+    login,
+    tokenRenew
 }
