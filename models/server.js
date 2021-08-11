@@ -13,7 +13,8 @@ class Server {
         this.io = require('socket.io')(this.server);
 
         this.paths = {
-            auth: '/api/auth'
+            auth: '/api/auth',
+            queue: '/api/queue'
         }
 
         //Middlewares
@@ -38,6 +39,7 @@ class Server {
 
     routes() {
          this.app.use(this.paths.auth, require('../routes/auth'))
+         this.app.use(this.paths.queue, require('../routes/queue'))
     }
 
     sockets() {
