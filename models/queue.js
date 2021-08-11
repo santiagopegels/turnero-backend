@@ -15,16 +15,15 @@ const QueueSchema = Schema({
     }],
     lastNumber: {
         type: Number,
+        default: 0,
     },
     ticketsAttended: [{
         number: Number,
         screen: String,
     }],
     users: [{
-        uid: {
             type: Schema.Types.ObjectId,
             ref: 'User',
-        }
     }]
 })
 
