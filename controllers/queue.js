@@ -33,7 +33,7 @@ const addTicket = async (req, res) => {
 
         queue.lastNumber++
 
-        queue.tickets.push({number: queue.lastNumber, screen: ''})
+        queue.tickets.push({ number: queue.lastNumber, screen: '' })
 
         await queue.save()
 
@@ -47,8 +47,45 @@ const addTicket = async (req, res) => {
     }
 }
 
+const getNextTicket = async (req, res) => {
+    try {
+        const queueId = req.params.id
+
+        const queue = await Queue.findById(queueId)
+
+        if (!queue) {
+            return res.status(400).json({
+                status: false,
+                message: 'No existe la fila.'
+            })
+        }
+
+        if (!queue.tickets) {
+            return res.status(400).json({
+                status: false,
+                message: 'No existe tickets disponibles.'
+            })
+        }
+
+        const ticket = queue.tickets.shift()
+        
+        queue.ticketsAttended.push(ticket)
+
+        await queue.save()
+
+        return res.status(200).json({
+            status: true,
+            ticket
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 
 module.exports = {
     createQueue,
-    addTicket
+    addTicket,
+    getNextTicket
 }
