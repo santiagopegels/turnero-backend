@@ -47,25 +47,21 @@ const addTicket = async (req, res) => {
     }
 }
 
-const getNextTicket = async (req, res) => {
+const getNextTicketSocket = async (queueId, screen) => {
     try {
-        const { screen } = req.body
-        const queueId = req.params.id
-
         const queue = await Queue.findById(queueId)
-
         if (!queue) {
-            return res.status(400).json({
+            return {
                 status: false,
                 message: 'No existe la fila.'
-            })
+            }
         }
 
         if (!queue.tickets.length > 0) {
-            return res.status(400).json({
+            return {
                 status: false,
-                message: `No existe tickets disponibles para la fila ${queue.name}.`
-            })
+                message: `No existen tickets disponibles para la fila ${queue.name}.`
+            }
         }
 
         const ticket = queue.tickets.shift()
@@ -73,12 +69,14 @@ const getNextTicket = async (req, res) => {
 
         queue.ticketsAttended.push(ticket)
 
-        await queue.save()
+        // await queue.save()
 
-        return res.status(200).json({
+        return {
             status: true,
-            ticket
-        })
+            ticket,
+            queue
+        }
+
     } catch (error) {
         console.log(error)
     }
@@ -87,9 +85,9 @@ const getNextTicket = async (req, res) => {
 const getAllUserQueues = async (req, res) => {
     try {
 
-        const userId  = req.uid
-        
-        const queues = await Queue.find({users: {$all: [userId]}})
+        const userId = req.uid
+
+        const queues = await Queue.find({ users: { $all: [userId] } })
 
         if (!queues.length > 0) {
             return res.status(400).json({
@@ -112,6 +110,6 @@ const getAllUserQueues = async (req, res) => {
 module.exports = {
     createQueue,
     addTicket,
-    getNextTicket,
+    getNextTicketSocket,
     getAllUserQueues
 }
