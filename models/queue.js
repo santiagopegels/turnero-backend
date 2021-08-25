@@ -5,6 +5,9 @@ const QueueSchema = Schema({
         type: String,
         required: true,
     },
+    description: {
+        type: String,
+    },
     today: {
         type: Date,
         default: Date.now,
