@@ -3,7 +3,7 @@ const {
 
 const socketController = (socket) => {
 
-    console.log('new connection')
+    console.log('new connection', socket.id)
 
     socket.on("next-ticket", async ({ queueId, screen }, callback) => {
 
@@ -15,9 +15,9 @@ const socketController = (socket) => {
         }
 
         const { status, message, ticket, queue } = await getNextTicketSocket(queueId, screen)
-
+        
         if (queue) {
-            socket.emit('queues-change', queue)
+            socket.broadcast.emit('queues-change', queue, ticket)
         }
 
         if (!status) {
@@ -28,12 +28,10 @@ const socketController = (socket) => {
         } else {
             return callback({
                 status,
-                ticket
+                ticket,
+                queue
             })
         }
-
-
-
     });
 
 }
