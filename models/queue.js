@@ -15,6 +15,10 @@ const QueueSchema = Schema({
     tickets: [{
         number: Number,
         screen: String,
+        created_at: {
+            type: Date,
+            default: Date.now,
+        }
     }],
     lastNumber: {
         type: Number,
@@ -23,6 +27,11 @@ const QueueSchema = Schema({
     ticketsAttended: [{
         number: Number,
         screen: String,
+        created_at: Date,
+        attended_at: {
+            type: Date,
+            default: Date.now,
+        }
     }],
     users: [{
             type: Schema.Types.ObjectId,

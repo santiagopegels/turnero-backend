@@ -5,12 +5,6 @@ const socketController = (socket) => {
 
     console.log('new connection')
 
-    socket.on("create user", (payload) => {
-        console.log('create user event')
-
-        socket.emit('return', 'Funcionando')
-    });
-
     socket.on("next-ticket", async ({ queueId, screen }, callback) => {
 
         if (!queueId || !screen) {
