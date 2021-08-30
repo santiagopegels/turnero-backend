@@ -50,7 +50,7 @@ const getNextTicketSocket = async (queueId, screen) => {
 
         queue.ticketsAttended.push(ticket)
 
-        // await queue.save()
+        await queue.save()
 
         return {
             status: true,
