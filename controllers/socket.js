@@ -5,7 +5,6 @@ const socketController = (socket) => {
     console.log('new connection', socket.id)
 
     socket.on("next-ticket", async ({ queueId, screen }, callback) => {
-
         if (!queueId || !screen) {
             return callback({
                 status: false,
