@@ -24,6 +24,10 @@ const QueueSchema = Schema({
         type: Number,
         default: 0,
     },
+    actualNumber: {
+        type: Number,
+        default: 0,
+    },
     ticketsAttended: [{
         number: Number,
         screen: String,

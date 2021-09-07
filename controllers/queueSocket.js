@@ -48,7 +48,12 @@ const getNextTicketSocket = async (queueId, screen) => {
         const ticket = queue.tickets.shift()
         ticket.screen = screen
 
-        queue.ticketsAttended.push(ticket)
+        queue.ticketsAttended.unshift(ticket)
+        queue.actualNumber = ticket.number
+
+        if(queue.ticketsAttended.length > 20){
+            queue.ticketsAttended.splice(-1,1)
+        }
 
         await queue.save()
 
