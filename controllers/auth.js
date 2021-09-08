@@ -46,7 +46,7 @@ const login = async (req, res) => {
 
         if (!user) {
             return res.status(400).json({
-                ok: false,
+                status: false,
                 msg: 'Compruebe usuario o contraseña'
             })
         }
@@ -55,6 +55,7 @@ const login = async (req, res) => {
 
         if (!validPassword) {
             return res.status(400).json({
+                status: false,
                 msg: 'Correo o password incorrecto'
             })
         }
@@ -70,7 +71,7 @@ const login = async (req, res) => {
     } catch (error) {
         console.log(error)
         return res.status(500).json({
-            ok: false,
+            status: false,
             msg: error
         })
     }
