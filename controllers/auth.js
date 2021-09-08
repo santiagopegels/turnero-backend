@@ -32,7 +32,7 @@ const newUser = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             status: false,
-            msg: error
+            message: error
         })
     }
 }
@@ -47,7 +47,7 @@ const login = async (req, res) => {
         if (!user) {
             return res.status(400).json({
                 status: false,
-                msg: 'Compruebe usuario o contraseña'
+                message: 'Compruebe usuario o contraseña'
             })
         }
 
@@ -56,7 +56,7 @@ const login = async (req, res) => {
         if (!validPassword) {
             return res.status(400).json({
                 status: false,
-                msg: 'Correo o password incorrecto'
+                message: 'Correo o password incorrecto'
             })
         }
 
@@ -72,7 +72,7 @@ const login = async (req, res) => {
         console.log(error)
         return res.status(500).json({
             status: false,
-            msg: error
+            message: error
         })
     }
 }

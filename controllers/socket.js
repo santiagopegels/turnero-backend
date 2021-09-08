@@ -8,7 +8,7 @@ const socketController = (socket) => {
         if (!queueId || !screen) {
             return callback({
                 status: false,
-                msg: 'Verificar la fila o el puesto.'
+                message: 'Verificar la fila o el puesto.'
             })
         }
 
@@ -37,7 +37,7 @@ const socketController = (socket) => {
         if (!queueId) {
             return callback({
                 status: false,
-                msg: 'Verificar la fila o el puesto.'
+                message: 'Verificar la fila o el puesto.'
             })
         }
 
