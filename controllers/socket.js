@@ -1,8 +1,15 @@
 const { getNextTicketSocket, addTicketSocket } = require('./queueSocket')
+const { verifyJWT } = require('../helpers/generateJWT')
 
-const socketController = (socket) => {
+const socketController = async (socket) => {
 
     console.log('new connection', socket.id)
+
+    const user = await verifyJWT(socket.handshake.auth.token)
+
+    if (!user) {
+        socket.disconnect()
+    }
 
     socket.on("next-ticket", async ({ queueId, screen }, callback) => {
         if (!queueId || !screen) {

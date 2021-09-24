@@ -28,7 +28,8 @@ const verifyJWT = async (token = '') => {
             return null;
         }
 
-        const { uid } = jwt.verify(token, process.env.API_KEY)
+        const {uid} = await jwt.verify(token, process.env.API_KEY)
+
         const user = await User.findById(uid)
 
         if (user) {
